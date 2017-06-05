@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "223249382920",
+    "firebase_url": "https://ibad-first.firebaseio.com",
+    "project_id": "ibad-first",
+    "storage_bucket": "ibad-first.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223249382920:android:82e63c6e00b2e58f",
+        "android_client_info": {
+          "package_name": "com.ibadsiddiqui01outlook.fireblog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223249382920-js5op1uko53e9mmtgvn82kahgogrrqvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1sJAzhQyGXlXT8hzOTsI2QpUkSdnHBc0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
