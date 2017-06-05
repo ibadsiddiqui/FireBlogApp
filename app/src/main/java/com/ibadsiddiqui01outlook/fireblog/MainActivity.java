@@ -2,17 +2,20 @@ package com.ibadsiddiqui01outlook.fireblog;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertController;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-
+    private RecyclerView mLogList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mLogList = (RecyclerView)findV
     }
 
     @Override

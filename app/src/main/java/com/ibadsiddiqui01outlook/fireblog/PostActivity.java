@@ -12,29 +12,38 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class PostActivity extends AppCompatActivity {
+
+    //Buttons and EditText
     private ImageButton mSelectImage;
     private EditText mPostTitle;
     private EditText mPostDesc;
     private Button mPostSubmitBtn;
 
+    //Images accessing
     private Uri mImageUri = null;   // for image url
-
     private static final int GALLERY_REQUEST = 1;   // accessing gallery
 
+    //Firebase APIs
     private StorageReference mFireBaseStorage;  //firebase storage for images
-
+    private DatabaseReference mDatabse;
+    //Progress DialogBar
     private ProgressDialog mProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
         mFireBaseStorage = FirebaseStorage.getInstance().getReference();    // Initialize firebase storage
+        mDatabse = FirebaseDatabase.getInstance().getReference().child("Blog"); //Initializes database with child nodes
+
         mProgress = new ProgressDialog(this);
         mSelectImage = (ImageButton)findViewById(R.id.imageSelect); // Image View for Selecting images
 
@@ -66,18 +75,25 @@ public class PostActivity extends AppCompatActivity {
         mProgress.setMessage("Posting to Blog...");
         mProgress.show();
 
-        String title_Val = mPostTitle.getText().toString().trim();  // trims the title of image
-        String desc_val = mPostDesc.getText().toString().trim();    // trims the image description
+        final String title_Val = mPostTitle.getText().toString().trim();  // trims the title of image
+        final String desc_val = mPostDesc.getText().toString().trim();    // trims the image description
 
         if(!TextUtils.isEmpty(title_Val) && !TextUtils.isEmpty(desc_val) && mImageUri != null){
-            StorageReference filePath = mFireBaseStorage.child("#Log_Images").child(mImageUri.getLastPathSegment());    // lastpathsegement will return name of image
+            StorageReference filePath = mFireBaseStorage.child("Blog_Images").child(mImageUri.getLastPathSegment());    // lastpathsegement will return name of image
 
             filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                     Uri downloadUri = taskSnapshot.getDownloadUrl();    // provides dwonload uri
+
+                    DatabaseReference newPost = mDatabse.push();
+                    newPost.child("title").setValue(title_Val);
+                    newPost.child("desc").setValue(desc_val);
+                    newPost.child("image").setValue(downloadUri.toString());
                     mProgress.dismiss();
+
+                    startActivity(new Intent(PostActivity.this, MainActivity.class));
                 }
             });
         }
