@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -33,6 +34,7 @@ public class PostActivity extends AppCompatActivity {
     //Firebase APIs
     private StorageReference mFireBaseStorage;  //firebase storage for images
     private DatabaseReference mDatabse;
+
     //Progress DialogBar
     private ProgressDialog mProgress;
 
@@ -43,6 +45,7 @@ public class PostActivity extends AppCompatActivity {
 
         mFireBaseStorage = FirebaseStorage.getInstance().getReference();    // Initialize firebase storage
         mDatabse = FirebaseDatabase.getInstance().getReference().child("Blog"); //Initializes database with child nodes
+
 
         mProgress = new ProgressDialog(this);
         mSelectImage = (ImageButton)findViewById(R.id.imageSelect); // Image View for Selecting images
@@ -73,12 +76,13 @@ public class PostActivity extends AppCompatActivity {
 
     private void startPosting() {
         mProgress.setMessage("Posting to Blog...");
-        mProgress.show();
 
         final String title_Val = mPostTitle.getText().toString().trim();  // trims the title of image
         final String desc_val = mPostDesc.getText().toString().trim();    // trims the image description
 
         if(!TextUtils.isEmpty(title_Val) && !TextUtils.isEmpty(desc_val) && mImageUri != null){
+            mProgress.show();
+
             StorageReference filePath = mFireBaseStorage.child("Blog_Images").child(mImageUri.getLastPathSegment());    // lastpathsegement will return name of image
 
             filePath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

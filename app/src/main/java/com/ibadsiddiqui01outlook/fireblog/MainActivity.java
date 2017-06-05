@@ -3,6 +3,7 @@ package com.ibadsiddiqui01outlook.fireblog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -20,6 +22,9 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mLogList;
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +34,26 @@ public class MainActivity extends AppCompatActivity {
         mLogList = (RecyclerView)findViewById(R.id.Blog_list);
         mLogList.setHasFixedSize(true);
         mLogList.setLayoutManager(new LinearLayoutManager(this));
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null){
+                    Intent loginIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(loginIntent);
+                }
+            }
+        };
     }
 
 
     @Override
     protected void onStart(){
         super.onStart();
+
+        mAuth.addAuthStateListener(mAuthStateListener);
 
         FirebaseRecyclerAdapter<Blog, BlogViewHolder>firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
                 Blog.class,
@@ -50,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mLogList.setAdapter(firebaseRecyclerAdapter);
-
     }
 
     // class for setting and getting the text from title and description
