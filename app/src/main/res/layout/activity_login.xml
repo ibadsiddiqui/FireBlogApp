@@ -15,16 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Password..."
-        android:ems="10"
-        android:layout_below="@+id/loginEmailField"
-        android:layout_alignEnd="@+id/loginEmailField"
-        android:id="@+id/loginPasswordField"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:hint="Email..."
         android:ems="10"
         android:layout_marginTop="66dp"
@@ -38,15 +28,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/loginPasswordField"
         android:layout_centerHorizontal="true"
-        android:id="@+id/button2"/>
+        android:id="@+id/loginBtn"
+        android:background="@android:drawable/screen_background_light_transparent"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <Button
         android:text="Need a new Account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button3"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
+        android:id="@+id/signUpBtn"
         android:background="@android:drawable/screen_background_light_transparent"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Password..."
+        android:layout_below="@+id/loginEmailField"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/loginPasswordField"/>
 </RelativeLayout>
