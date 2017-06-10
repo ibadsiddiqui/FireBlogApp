@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-
+        checkUserExist();
         mAuth.addAuthStateListener(mAuthStateListener);
 
         FirebaseRecyclerAdapter<Blog, BlogViewHolder>firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.hasChild(UserID)){
-                    Intent mIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent mIntent = new Intent(MainActivity.this, SetUpActivity.class);
                     mIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mIntent);
                 }

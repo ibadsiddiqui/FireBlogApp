@@ -93,7 +93,9 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(mIntent);
                 }
                 else{
-                    Toast.makeText(LoginActivity.this, "You need to set up your account", Toast.LENGTH_SHORT).show();
+                    Intent setUpIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    setUpIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(setUpIntent);
                 }
             }
 

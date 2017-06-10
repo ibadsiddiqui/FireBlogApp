@@ -7,7 +7,7 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by IBAD SIDDIQUI on 6/10/2017.
  */
-
+// Provides offline capability
 public class SimpleBlog extends Application {
 
     @Override
